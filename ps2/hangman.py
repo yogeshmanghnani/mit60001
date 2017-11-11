@@ -146,26 +146,37 @@ def hangman(secret_word):
     
     print("Welcome to the game Hangman!")
     print("I am thinking of a word that is {0:d} letters long.".format(len(secret_word)))
+    
+    
+    #starting the loop
     while(not guessed and not lost):
+        #exi control 
         if guesses_left <= 0 or warnings_left <= 0:
             lost = True
+            
+            
+        #print before every guess
         print(breakline)
         print("You have {0:d} warnings left".format(warnings_left))
         print("You have {0:d} guesses left.".format(guesses_left))
         print("Available letters: " + get_available_letters(letters_guessed))
         guessed_letter = input("Please guess a letter: ").lower()
+        
+        #check if guessed_letter is valid input
         if guessed_letter in letters_guessed:
             print("You have already guessed this letter")
+            warnings_left-=1
             continue
         elif len(guessed_letter) != 1 or (not guessed_letter.isalpha()):
             print("Enter a character")
             warnings_left-=1
             continue
         else:
+            #if guessed letter is valid then append it to list of guessed letters
             letters_guessed.append(guessed_letter)
         
         
-        
+        #check if guessed letter is in the word
         guessed_word = get_guessed_word(secret_word, letters_guessed)
         if guessed_letter in list(secret_word):
             print("Good guess:" + guessed_word)
@@ -176,19 +187,28 @@ def hangman(secret_word):
                 guesses_left-=2
             else:
                 guesses_left-=1
-                
         
-                
-        
-        
-        
+        #check winning status
         if guessed_word.replace(' ', '') == secret_word:
-            unique_characters_num = len(list(set(secret_word)))
-            score=guesses_left*unique_characters_num
-            print(breakline)
-            print("Congratulations, you won!")
-            print("Your total score for this game is:", score)
             guessed = True
+                
+        ################################
+        #End of loop
+        ################################
+        
+    #Checking how the loop ended and printing the result  
+    if guessed_word.replace(' ', '') == secret_word:
+        unique_characters_num = len(list(set(secret_word)))
+        score=guesses_left*unique_characters_num
+        print(breakline)
+        print("Congratulations, you won!")
+        print("Your total score for this game is:", score)
+    elif lost==True:
+        if warnings_left<=0:
+            print("Sorry you have lost because you have entered too many invalid characters. The word was", secret_word)
+        elif guesses_left<=0:
+            print("Sorry, you have ran out of guesses. The word was", secret_word)
+        
             
 
 
