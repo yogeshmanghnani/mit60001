@@ -143,9 +143,12 @@ def hangman(secret_word):
     lost=False
     warnings_left = 3
     breakline="---------------"
+    
     print("Welcome to the game Hangman!")
     print("I am thinking of a word that is {0:d} letters long.".format(len(secret_word)))
-    while(not guessed or lost):
+    while(not guessed and not lost):
+        if guesses_left <= 0 or warnings_left <= 0:
+            lost = True
         print(breakline)
         print("You have {0:d} warnings left".format(warnings_left))
         print("You have {0:d} guesses left.".format(guesses_left))
@@ -156,6 +159,7 @@ def hangman(secret_word):
             continue
         elif len(guessed_letter) != 1 or (not guessed_letter.isalpha()):
             print("Enter a character")
+            warnings_left-=1
             continue
         else:
             letters_guessed.append(guessed_letter)
@@ -173,8 +177,7 @@ def hangman(secret_word):
             else:
                 guesses_left-=1
                 
-            if guesses_left == -1:
-                lost = True
+        
                 
         
         
