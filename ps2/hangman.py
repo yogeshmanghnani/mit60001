@@ -224,7 +224,20 @@ def match_with_gaps(my_word, other_word):
         False otherwise: 
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    my_word = my_word.replace(' ', '')
+    
+    for charIndex in range(len(my_word)):
+        same = True
+        if my_word[charIndex] == '_':
+            if other_word[charIndex] in list(my_word):
+                return False
+            continue
+        elif my_word[charIndex] != other_word[charIndex]:
+            same = False
+            break
+        
+    return same
+            
 
 
 
@@ -238,8 +251,9 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    for word in wordlist:
+        if match_with_gaps(my_word, word):
+            print(word)
 
 
 
@@ -287,13 +301,13 @@ if __name__ == "__main__":
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
     
-    secret_word = choose_word(wordlist)
-    hangman(secret_word)
+    #secret_word = choose_word(wordlist)
+    #hangman(secret_word)
 
 ###############
     
     # To test part 3 re-comment out the above lines and 
     # uncomment the following two lines. 
-    
+    pass
     #secret_word = choose_word(wordlist)
     #hangman_with_hints(secret_word)
