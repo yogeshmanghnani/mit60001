@@ -210,8 +210,23 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
+    word = word.lower()
+    if word in word_list:
+        in_wordlist=True
+    else:
+        in_wordlist=False
 
-    pass  # TO DO... Remove this line when you implement this function
+    in_hand = True
+    for char in word:
+        if char not in hand.keys():
+            in_hand = False
+
+    if in_wordlist and in_hand:
+        return True
+    else:
+        return False
+
+      # TO DO... Remove this line when you implement this function
 
 
 #
