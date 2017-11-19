@@ -98,7 +98,7 @@ def get_word_score(word, n):
 
     comp1 = 0
     for char in word:
-        comp1 += SCRABBLE_LETTER_VALUES[char]
+        comp1 += SCRABBLE_LETTER_VALUES.get(char, 0)
     comp2 = (7 * len(word)) - (3 * (n - len(word)))
     if comp2 > 1:
         comp2 = comp2
@@ -151,7 +151,7 @@ def deal_hand(n):
     """
 
     hand = {}
-    num_vowels = int(math.ceil(n / 3))
+    num_vowels = int(math.ceil(n / 3)-1)
 
     for i in range(num_vowels):
         x = random.choice(VOWELS)
@@ -160,6 +160,8 @@ def deal_hand(n):
     for i in range(num_vowels, n):
         x = random.choice(CONSONANTS)
         hand[x] = hand.get(x, 0) + 1
+
+    hand['*']=1
 
     return hand
 
@@ -211,22 +213,51 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     word = word.lower()
-    if word in word_list:
-        in_wordlist=True
-    else:
-        in_wordlist=False
+    vowels_tested = 0
+    if '*' in word:
+        for char in VOWELS:
+            temp_word = word
+            temp_word = temp_word.replace('*', char)
+            if temp_word in word_list:
+                in_wordlist = True
+            else:
+                in_wordlist = False
 
-    in_hand = True
-    for char in word:
-        if char not in hand.keys():
-            in_hand = False
+            in_hand = True
+            freq = get_frequency_dict(word)
+            for letter in freq.keys():
+                num_in_hand = hand.get(letter, 0)
+                if not num_in_hand >= freq[letter]:
+                    in_hand = False
 
-    if in_wordlist and in_hand:
-        return True
-    else:
+
+            if in_wordlist and in_hand:
+                return True
+            
         return False
 
-      # TO DO... Remove this line when you implement this function
+    else:
+        if word in word_list:
+            in_wordlist=True
+        else:
+            in_wordlist=False
+
+        # some initializations
+        in_hand = True
+        new_hand = hand.copy()
+
+        # checking hand validity
+        freq = get_frequency_dict(word)
+        for char in freq.keys():
+            num_in_hand = new_hand.get(char, 0)
+            if not num_in_hand >= freq[char]:
+                in_hand = False
+
+        if in_hand and in_wordlist:
+            return True
+        else:
+            return False
+
 
 
 #
