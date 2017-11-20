@@ -358,7 +358,7 @@ def play_hand(hand, word_list):
 
     # Return the total score as result of function
 
-
+    return total_score
 #
 # Problem #6: Playing a game
 # 
@@ -434,8 +434,21 @@ def play_game(word_list):
 
     word_list: list of lowercase strings
     """
+    total_score = 0
+    no_of_hands = int(input("Enter total number of hands: "))
+    while (no_of_hands > 0):
+        hand = deal_hand(HAND_SIZE)
+        print("Current hand:" ,end=' ')
+        display_hand(hand)
+        user_sub = input("Would you like to substitute a letter: ")
+        if user_sub == "yes":
+            letter = input("Enter letter to substitute: ")
+            hand = substitute_hand(hand, letter)
+        total_score += play_hand(hand, word_list)
+        print("---------------", end="\n\n")
+        no_of_hands-=1
+    print("Total_score:", total_score)
 
-    print("play_game not implemented.")  # TO DO... Remove this line when you implement this function
 
 
 #
