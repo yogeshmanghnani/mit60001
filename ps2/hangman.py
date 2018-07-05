@@ -310,6 +310,7 @@ def hangman_with_hints(secret_word):
         print(breakline)
         print("You have {0:d} warnings left".format(warnings_left))
         print("You have {0:d} guesses left.".format(guesses_left))
+        displayHangman(6 - guesses_left)
         print("Available letters: " + get_available_letters(letters_guessed))
         guessed_letter = input("Please guess a letter: ").lower()
         
@@ -365,6 +366,101 @@ def hangman_with_hints(secret_word):
             print("Sorry you have lost because you have entered too many invalid characters. The word was", secret_word)
         elif guesses_left<=0:
             print("Sorry, you have ran out of guesses. The word was", secret_word)
+            
+            
+    
+def displayHangman(errors):
+    if errors == 6:
+        print("""
+              |----------|
+              |          O
+              |         /|\\
+              |          |
+              |          |
+              |         / \\
+              |    
+              |
+              |
+              |
+              """)
+    elif errors == 5:
+        print("""
+              |----------|
+              |          O
+              |         /|\\
+              |          |
+              |          |
+              |         / 
+              |    
+              |
+              |
+              |
+              """)
+    elif errors == 4:
+        print("""
+              |----------|
+              |          O
+              |         /|\\
+              |          |
+              |          |
+              |         
+              |    
+              |
+              |
+              |
+              """)
+    elif errors == 3:
+        print("""
+              |----------|
+              |          O
+              |         /|
+              |          |
+              |
+              |
+              |    
+              |
+              |
+              |
+              """)
+    elif errors == 2:
+        print("""
+              |----------|
+              |          O
+              |          |
+              |          |
+              |
+              |
+              |    
+              |
+              |
+              |
+              """)
+    elif errors == 1:
+        print("""
+              |----------|
+              |          O
+              |
+              |
+              |
+              |         
+              |    
+              |
+              |
+              |
+              """)
+    elif errors == 0:
+        print("""
+              |----------|
+              |          
+              |         
+              |          
+              |          
+              |         
+              |    
+              |
+              |
+              |
+              """)
 
 
 
